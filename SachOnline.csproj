@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -122,8 +123,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SachOnlineController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbSachOnline.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbSachOnline.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,7 +160,13 @@
     <Content Include="Images\anh12.jpg" />
     <Content Include="Images\anh13.jpg" />
     <Content Include="Images\anh14.jpg" />
+    <Content Include="Images\anh15.jpg" />
+    <Content Include="Images\anh16.jpg" />
+    <Content Include="Images\anh17.jpg" />
+    <Content Include="Images\anh18.jpg" />
+    <Content Include="Images\anh19.jpg" />
     <Content Include="Images\anh2.jpg" />
+    <Content Include="Images\anh20.jpg" />
     <Content Include="Images\anh3.jpg" />
     <Content Include="Images\anh4.jpg" />
     <Content Include="Images\anh5.jpg" />
@@ -168,6 +181,14 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Models\dbSachOnline.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>dbSachOnline.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\dbSachOnline.dbml.layout">
+      <DependentUpon>dbSachOnline.dbml</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -197,10 +218,14 @@
     <Content Include="Views\SachOnline\Index.cshtml" />
     <Content Include="Views\Shared\ChuDePartial.cshtml" />
     <Content Include="Views\Shared\NhaXuatBanPartial.cshtml" />
+    <Content Include="Views\SachOnline\SachTheoChuDe.cshtml" />
+    <Content Include="Views\SachOnline\ChiTietSach.cshtml" />
+    <Content Include="Views\SachOnline\SachTheoNhaXuatBan.cshtml" />
+    <Content Include="Views\User\DangKy.cshtml" />
+    <Content Include="Views\User\DangNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -228,6 +253,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

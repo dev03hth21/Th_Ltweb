@@ -18,10 +18,10 @@
             max-height: 250px;
         }
 
-            .imgbook:hover {
-                transform: scale(0.9);
-                cursor: pointer;
-            }
+        .imgbook:hover {
+            transform: scale(0.9);
+            cursor: pointer;
+        }
 
         .imgsachbannhieu {
             width: 100px;
@@ -29,6 +29,25 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+
+                @Html.ActionLink("SachOnline", "Index", "SachOnline", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between navbar-right">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Trang Chủ", "Index", "SachOnline", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Sách Theo Chủ Đề", "SachTheoChuDe", "SachOnline", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Sách Theo Nhà Xuất Bản", "SachTheoNhaXuatBan", "SachOnline", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Đăng Kí", "DangKy", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Đăng Nhập", "DangNhap", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
