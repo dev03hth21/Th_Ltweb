@@ -31,7 +31,7 @@ namespace SachOnline.Controllers
         public ActionResult DangKy(FormCollection collection, KHACHHANG kh)
         {
             var sHoTen = collection["HoTen"];
-            var sTenDN = collection["TaiKhoan"];
+            var sTaiKhoan = collection["TaiKhoan"];
             var sMatKhau = collection["MatKhau"];
             var sMatKhauNhapLai = collection["MatKhauNL"];
             var sDiaChi = collection["DiaChi"];
@@ -43,7 +43,7 @@ namespace SachOnline.Controllers
                 TempData["HoTen"] = sHoTen;
                 ViewData["err1"] = "Họ tên không được rỗng";
             }
-            else if (String.IsNullOrEmpty(sTenDN))
+            else if (String.IsNullOrEmpty(sTaiKhoan))
             {
                 TempData["TenDN"] = sTaiKhoan;
                 ViewData["err2"] = "Tên đăng nhập không được rỗng";
@@ -79,7 +79,7 @@ namespace SachOnline.Controllers
             {
                 ViewBag.ThongBao = "Email đã được sử dụng";
             }
-            else if (db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTenDN) != null)
+            else if (db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTaiKhoan) != null)
             {
                 ViewBag.ThongBao = "Tên đăng nhập đã tồn tại";
             }
@@ -98,6 +98,8 @@ namespace SachOnline.Controllers
             }
             return this.DangKy();
         }
+
+
         [HttpGet]
         public ActionResult DangNhap()
         {
@@ -106,30 +108,61 @@ namespace SachOnline.Controllers
         [HttpPost]
         public ActionResult DangNhap(FormCollection collection)
         {
-            var stenDN = collection["TaiKhoan"];
-            var sMatkhau = collection["Matkhau"];
-            if (String.IsNullOrEmpty(stenDN))
+            var sTaiKhoan = collection["TaiKhoan"];
+            var sMatKhau = collection["MatKhau"];
+
+            if (String.IsNullOrEmpty(sTaiKhoan))
             {
                 ViewData["Err1"] = "Bạn chưa nhập tên đăng nhập";
             }
-            else if (String.IsNullOrEmpty(sMatkhau))
+            else if (String.IsNullOrEmpty(sMatKhau))
             {
                 ViewData["Err2"] = "Phải nhập mật khẩu";
             }
             else
             {
-                KHACHHANG kh = db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == stenDN && n.MatKhau == sMatkhau);
-                if (kh != null)
+                if (sTaiKhoan == "admin" && sMatKhau == "admin") // Thay "admin" và "admin_password" bằng thông tin đăng nhập thực tế của Admin
                 {
-                    ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
-                    Session["TaiKhoan"] = kh;
+                    // Đăng nhập thành công cho Admin
+                    Session["Admin"] = "admin"; // Lưu thông tin đăng nhập Admin vào Session
+                    return RedirectToAction("Index", "Admin", new { area = "Admin" });
                 }
                 else
                 {
-                    ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng";
+                    KHACHHANG kh = db.KHACHHANGs.SingleOrDefault(n => n.TaiKhoan == sTaiKhoan && n.MatKhau == sMatKhau);
+                    if (kh != null)
+                    {
+                        ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
+                        Session["TaiKhoan"] = kh;
+
+                        // Kiểm tra giỏ hàng
+                        var gioHang = Session["GioHang"] as List<GioHang>;
+                        if (gioHang != null && gioHang.Any())
+                        {
+                            // Giỏ hàng không trống, chuyển hướng đến trang DatHang
+                            return RedirectToAction("DatHang", "GioHang");
+                        }
+                        else
+                        {
+                            // Giỏ hàng trống, chuyển hướng đến trang Index
+                            return RedirectToAction("Index", "SachOnline");
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ThongBao = "Tên đăng nhập hoặc mật khẩu không đúng";
+                    }
                 }
             }
+
             return View();
+        }
+
+
+        public ActionResult DangXuat()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "SachOnline");
         }
 
     }

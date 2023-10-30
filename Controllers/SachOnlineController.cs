@@ -1,4 +1,5 @@
-﻿using SachOnline.Models;
+﻿using PagedList;
+using SachOnline.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +42,15 @@ namespace SachOnline.Controllers
             var listNhaXuatBan = from cd in data.NHAXUATBANs select cd;
             return PartialView(listNhaXuatBan);
         }
-        public ActionResult SachTheoChuDe(int id)
+        public ActionResult SachTheoChuDe(int iMaCD, int ? page)
         {
-            var sach = from s in data.SACHes where s.MaCD==id select s;
-            return View(sach);
+            ViewBag.MaCD = iMaCD;
+            //tạo biến quy định số sản phẩm cho mỗi trang
+            int iSize = 3;
+            //tạo biến số trang
+            int iPagenum = (page ?? 1 );    
+            var sach = from s in data.SACHes where s.MaCD==iMaCD select s;
+            return View(sach.ToPagedList(iPagenum,iSize));
         }
         public ActionResult ChiTietSach(int id)
         {

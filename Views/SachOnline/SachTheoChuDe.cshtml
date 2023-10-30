@@ -1,11 +1,22 @@
 ﻿
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<SachOnline.Models.SACH>
 @{
     ViewBag.Title = "SachTheoChuDe";
-    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    Layout = "~/Views/Shared/_ LayoutUser.cshtml";
 }
-
 <h2 class="text-center">SÁCH THEO CHỦ ĐỀ</h2>
 <hr />
+@if (!Model.Any())
+{
+    <h4 style="padding: 25px 0px; color: #ff0000;">Không tìm thấy kết quả nào cho chủ đề "@ViewBag.ten".</h4>
+    <div class="text-center">
+        <img style="width: 700px; height: 400px; display: block; margin: 0 auto;" src="~/Images/404.png" />
+    </div>
+}
+else
+{
     <div class="row text-center">
         @foreach (var sach in Model)
         {
@@ -26,3 +37,10 @@
             </div>
         }
     </div>
+}
+@*Tạo liên kết các trang*@
+Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("SachTheoChuDe", new { id = ViewBag.Id, page }))
+</div>
